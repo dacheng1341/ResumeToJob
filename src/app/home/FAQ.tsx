@@ -2,63 +2,34 @@
 import { useState } from "react";
 import { FadeIn } from "components/animations/FadeIn";
 import { StaggeredFadeIn } from "components/animations/StaggeredFadeIn";
-import { useLanguageRedux } from "../lib/hooks/useLanguageRedux";
-
-const getFAQItems = (language: string) => [
-  {
-    question:
-      language === "en"
-        ? "Why is my exported resume showing garbled characters?"
-        : "为什么我的简历导出后是乱码？",
-    answer:
-      language === "en"
-        ? "This is usually because you haven't selected the correct font or the fonts haven't loaded properly due to slow network speeds. Please ensure the fonts have loaded completely before exporting your resume."
-        : "没有选择正确的字体或者因为网速慢字体未加载好。请确保字体完全加载后再导出简历。",
-  },
-  {
-    question:
-      language === "en"
-        ? "Why don't I see Chinese fonts in the font options?"
-        : "为什么我的字体选项里没有中文字体？",
-    answer:
-      language === "en"
-        ? "Because Chinese fonts are large, ResumeToJob checks your browser language settings. If your browser language does not include Chinese, Chinese fonts will not be loaded."
-        : "由于中文字体较大，ResumeToJob会查看你的浏览器语言设置，如果你的浏览器语言没有包括中文，那么就不会加载中文字体。",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(-1);
-  const { language } = useLanguageRedux();
+  const t = useTranslations("home.faq");
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? -1 : index);
   };
 
-  const faqItems = getFAQItems(language);
-
-  const translate = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      title: {
-        en: "Frequently Asked Questions",
-        zh: "常见问题",
-      },
-      subtitle: {
-        en: "Frequently encountered issues about ResumeToJob on GitHub",
-        zh: "关于ResumeToJob的Github常见Issues",
-      },
-    };
-
-    return translations[key]?.[language] || key;
-  };
+  const faqItems = [
+    {
+      question: t("items.garbledText.question"),
+      answer: t("items.garbledText.answer"),
+    },
+    {
+      question: t("items.chineseFonts.question"),
+      answer: t("items.chineseFonts.answer"),
+    },
+  ];
   return (
     <section className="mx-auto mt-12 max-w-3xl px-4 pb-16 sm:mt-16 sm:px-8 sm:pb-20">
       <FadeIn direction="up">
         <h2 className="text-center text-2xl font-bold text-gray-900 sm:text-3xl">
-          {translate("title")}
+          {t("title")}
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-base text-gray-600 sm:mt-4 sm:text-lg">
-          {translate("subtitle")}
+          {t("subtitle")}
         </p>
       </FadeIn>
 

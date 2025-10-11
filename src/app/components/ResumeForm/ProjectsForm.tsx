@@ -8,13 +8,14 @@ import { useEffect, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { selectProjects, changeProjects } from "lib/redux/resumeManagerSlice";
 import type { ResumeProject } from "lib/redux/types";
-import { useLanguageRedux } from "../../lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../i18n";
 import { updateFormHeadingIfNotCustomized } from "lib/redux/settingsSlice";
 
 export const ProjectsForm = () => {
   const projects = useAppSelector(selectProjects);
   const dispatch = useAppDispatch();
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
   const showDelete = projects.length > 1;
 
   const translate = useCallback(

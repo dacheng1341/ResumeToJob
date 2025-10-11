@@ -11,49 +11,16 @@ import {
   selectThemeColor,
   updateFormHeadingIfNotCustomized,
 } from "lib/redux/settingsSlice";
-import { useLanguageRedux } from "../../lib/hooks/useLanguageRedux";
+import { useTranslations } from "next-intl";
 
 export const SkillsForm = () => {
   const skills = useAppSelector(selectSkills);
   const dispatch = useAppDispatch();
-  const { language } = useLanguageRedux();
+  const t = useTranslations("resumeForm.skills");
   const { featuredSkills, descriptions } = skills;
   const form = "skills";
   const themeColor = useAppSelector(selectThemeColor) || "#38bdf8";
 
-  const translate = useCallback(
-    (key: string) => {
-      const translations: Record<string, Record<string, string>> = {
-        skills: {
-          en: "Skills",
-          zh: "技能",
-        },
-        skillsList: {
-          en: "Skills List",
-          zh: "技能列表",
-        },
-        skillsItem: {
-          en: "Supports Markdown, see editor instructions for details",
-          zh: "支持Markdown，详见编辑器使用说明",
-        },
-        featuredSkills: {
-          en: "Featured Skills (Optional)",
-          zh: "特色技能（可选）",
-        },
-        featuredSkillsDescription: {
-          en: "Featured skills are optional and highlight your top skills. More circles indicate higher proficiency.",
-          zh: "特色技能是可选项，用于突出您的顶级技能，圆圈越多表示熟练度越高。",
-        },
-        featuredSkillPlaceholder: {
-          en: "Featured Skill",
-          zh: "特色技能",
-        },
-      };
-
-      return translations[key]?.[language] || key;
-    },
-    [language],
-  );
   const handleSkillsChange = (field: "descriptions", value: string[]) => {
     dispatch(changeSkills({ field, value }));
   };
@@ -70,10 +37,10 @@ export const SkillsForm = () => {
     dispatch(
       updateFormHeadingIfNotCustomized({
         field: form,
-        value: translate("skills"),
+        value: t("title"),
       }),
     );
-  }, [dispatch, language, form, translate]);
+  }, [dispatch, form, t]);
 
   return (
     <Form form={form}>
@@ -81,21 +48,21 @@ export const SkillsForm = () => {
       <div className="col-span-full grid grid-cols-6 gap-3">
         <div className="col-span-full">
           <BulletListTextarea
-            label={translate("skillsList")}
+            label={t("descriptions")}
             labelClassName="col-span-full"
             name="descriptions"
-            placeholder={translate("skillsItem")}
+            placeholder={t("placeholder")}
             value={descriptions}
             onChange={handleSkillsChange}
           />
         </div>
         <div className="col-span-full mb-4 mt-6 border-t-2 border-dotted border-gray-200" />
         <InputGroupWrapper
-          label={translate("featuredSkills")}
+          label={t("featuredSkills")}
           className="col-span-full"
         >
           <p className="mt-2 text-sm font-normal text-gray-600">
-            {translate("featuredSkillsDescription")}
+            {t("featuredSkillsDescription")}
           </p>
         </InputGroupWrapper>
 
@@ -108,7 +75,7 @@ export const SkillsForm = () => {
             setSkillRating={(newSkill, newRating) => {
               handleFeaturedSkillsChange(idx, newSkill, newRating);
             }}
-            placeholder={`${translate("featuredSkillPlaceholder")} ${idx + 1}`}
+            placeholder={`${t("skill")} ${idx + 1}`}
             circleColor={themeColor}
           />
         ))}

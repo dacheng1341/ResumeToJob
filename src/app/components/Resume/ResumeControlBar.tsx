@@ -7,7 +7,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
-import { useLanguageRedux } from "../../lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../i18n";
 
 const ResumeControlBar = ({
   scale,
@@ -28,7 +29,7 @@ const ResumeControlBar = ({
     setScale,
     documentSize,
   });
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
 
   const translate = (key: string) => {
     const translations: Record<string, Record<string, string>> = {

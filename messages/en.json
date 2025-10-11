@@ -1,0 +1,147 @@
+{
+  "common": {
+    "resume": "Resume",
+    "create": "Create",
+    "edit": "Edit",
+    "preview": "Preview",
+    "download": "Download",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "OK",
+    "delete": "Delete",
+    "add": "Add"
+  },
+  "nav": {
+    "createResume": "Create Resume",
+    "menu": "Menu",
+    "bugReport": "Bug Report",
+    "resetDefault": "Reset Default",
+    "language": "Language"
+  },
+  "home": {
+    "hero": {
+      "title": "Create a Professional Resume in Minutes",
+      "subtitle": "Free, open-source resume builder",
+      "createButton": "Create Resume",
+      "noRegistration": "No registration required"
+    },
+    "features": {
+      "title": "All-in-one Resume Builder",
+      "subtitle": "Packed with powerful features to help you create a professional resume and win interview opportunities",
+      "parser": {
+        "title": "Resume Parsing",
+        "description": "We can parse your PDF resume, making it easier to create and edit your resume content (feature coming soon)"
+      },
+      "templates": {
+        "title": "Multiple Templates",
+        "description": "Offering various professionally designed templates to meet different industry standards and job application requirements"
+      },
+      "responsive": {
+        "title": "Responsive Design",
+        "description": "Works smoothly on any device, from mobile phones to tablets and desktop computers, with optimized interface"
+      },
+      "security": {
+        "title": "Local Data Security",
+        "description": "Your resume data is stored entirely in your local browser and is never uploaded to external servers, ensuring complete privacy"
+      },
+      "export": {
+        "title": "Quick Export",
+        "description": "Export professional high-quality PDF files with just one click, ready to submit your job application anytime"
+      },
+      "ats": {
+        "title": "ATS-Friendly Format",
+        "description": "Optimize resume structure and formatting to ensure Applicant Tracking Systems can correctly parse all your information"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Frequently encountered issues about ResumeToJob on GitHub",
+      "items": {
+        "garbledText": {
+          "question": "Why is my exported resume showing garbled characters?",
+          "answer": "This is usually because you haven't selected the correct font or the fonts haven't loaded properly due to slow network speeds. Please ensure the fonts have loaded completely before exporting your resume."
+        },
+        "chineseFonts": {
+          "question": "Why don't I see Chinese fonts in the font options?",
+          "answer": "Because Chinese fonts are large, ResumeToJob checks your browser language settings. If your browser language does not include Chinese, Chinese fonts will not be loaded."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to Create Your Resume?",
+      "subtitle": "Easily create, edit and download beautiful professional resumes to improve your job application success rate",
+      "button": "Get Started"
+    }
+  },
+  "resumeBuilder": {
+    "edit": "Edit",
+    "preview": "Preview"
+  },
+  "resumeForm": {
+    "profile": {
+      "title": "Profile",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "url": "Website",
+      "summary": "Summary",
+      "location": "Location",
+      "photoUrl": "Photo URL"
+    },
+    "workExperience": {
+      "title": "Work Experience",
+      "add": "Add Work Experience",
+      "delete": "Delete Work Experience",
+      "company": "Company",
+      "position": "Position",
+      "date": "Date",
+      "responsibilities": "Responsibilities",
+      "placeholder": "Supports Markdown, see editor instructions for details"
+    },
+    "education": {
+      "title": "Education",
+      "add": "Add Education",
+      "delete": "Delete Education",
+      "school": "School",
+      "degree": "Degree",
+      "date": "Date",
+      "gpa": "GPA",
+      "descriptions": "Descriptions"
+    },
+    "project": {
+      "title": "Projects",
+      "add": "Add Project",
+      "delete": "Delete Project",
+      "project": "Project",
+      "date": "Date",
+      "descriptions": "Descriptions"
+    },
+    "skills": {
+      "title": "Skills",
+      "featuredSkills": "Featured Skills (Optional)",
+      "featuredSkillsDescription": "Featured skills are optional and highlight your top skills. More circles indicate higher proficiency.",
+      "skill": "Featured Skill",
+      "rating": "Rating",
+      "descriptions": "Skills List",
+      "placeholder": "Supports Markdown, see editor instructions for details"
+    },
+    "custom": {
+      "title": "Custom",
+      "descriptions": "Custom Descriptions"
+    }
+  },
+  "modal": {
+    "bugReport": {
+      "title": "Bug Report",
+      "message": "If you find bugs or things you think are not good, please report issues in GitHub Issues.\n\nClick OK to jump to the GitHub Issues page."
+    },
+    "resetDefault": {
+      "title": "Reset Default",
+      "message": "Are you sure you want to reset to default? This will delete all information, please make a backup.\n\nClick OK to clear all data and refresh the page."
+    }
+  },
+  "banner": {
+    "message": "Resume data is stored in browser locally. To prevent accidental loss, it is recommended to use the [manage resumes] function to export and save.",
+    "close": "Close"
+  }
+}

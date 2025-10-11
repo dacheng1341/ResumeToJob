@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { useLanguageRedux } from "../../lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../i18n";
 
 export const EditorInstructions = () => {
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
   const [isExpanded, setIsExpanded] = useState(false);
 
   const translations: Record<string, Record<"en" | "zh", string>> = {

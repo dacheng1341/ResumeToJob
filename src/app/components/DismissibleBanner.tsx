@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useLanguageRedux } from "../lib/hooks/useLanguageRedux";
+import { useTranslations } from "next-intl";
 
 export const DismissibleBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const { language } = useLanguageRedux();
+  const t = useTranslations("banner");
 
   useEffect(() => {
     const isDismissed = localStorage.getItem("banner-dismissed");
@@ -17,21 +17,6 @@ export const DismissibleBanner = () => {
   const handleDismiss = () => {
     setIsVisible(false);
     localStorage.setItem("banner-dismissed", "true");
-  };
-
-  const translate = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      bannerMessage: {
-        en: "Resume data is stored in browser locally. To prevent accidental loss, it is recommended to use the [manage resumes] function to export and save.",
-        zh: "简历数据存储在浏览器本地，以防意外情况丢失，建议使用【管理简历】功能导出保存",
-      },
-      close: {
-        en: "Close",
-        zh: "关闭",
-      },
-    };
-
-    return translations[key]?.[language] || key;
   };
 
   if (!isVisible) {
@@ -59,7 +44,7 @@ export const DismissibleBanner = () => {
           </div>
           <div className="ml-3">
             <p className="text-sm text-blue-800">
-              {translate("bannerMessage")}
+              {t("message")}
             </p>
           </div>
         </div>
@@ -68,7 +53,7 @@ export const DismissibleBanner = () => {
             type="button"
             className="inline-flex rounded-md bg-blue-50 p-1.5 text-blue-500 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-blue-50"
             onClick={handleDismiss}
-            aria-label={translate("close")}
+            aria-label={t("close")}
           >
             <XMarkIcon className="h-5 w-5" aria-hidden="true" />
           </button>

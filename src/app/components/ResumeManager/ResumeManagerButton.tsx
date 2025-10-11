@@ -7,11 +7,12 @@ import {
   switchResume,
 } from "lib/redux/resumeManagerSlice";
 import { ResumeManager } from "./index";
-import { useLanguageRedux } from "lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../i18n";
 
 export const ResumeManagerButton: React.FC = () => {
   const [isManagerOpen, setIsManagerOpen] = useState(false);
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
   const dispatch = useDispatch();
 
   const currentResume = useSelector(selectCurrentResume);

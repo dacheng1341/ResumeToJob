@@ -2,35 +2,14 @@
 import { useState } from "react";
 import { ResumeForm } from "components/ResumeForm";
 import { Resume } from "components/Resume";
-import { useLanguageRedux } from "../lib/hooks/useLanguageRedux";
-import { useResumeSync } from "../lib/hooks/useResumeSync";
+import { useResumeSync } from "../../lib/hooks/useResumeSync";
+import { useTranslations } from "next-intl";
 
 export default function Create() {
   const [activeTab, setActiveTab] = useState<"form" | "preview">("form");
-  const { language } = useLanguageRedux();
+  const t = useTranslations("resumeBuilder");
 
-  // 自动同步简历内容
   useResumeSync();
-
-  // 简历管理系统已经在全局的 useSetInitialStore hook 中初始化
-  // 这里不需要额外的初始化逻辑
-
-  // 数据现在通过 Redux store 自动保存到 localStorage
-  // 不需要单独的保存逻辑，因为 useSaveStateToLocalStorageOnChange 会处理
-
-  const translate = (key: "edit" | "preview") => {
-    const translations = {
-      edit: {
-        en: "Edit",
-        zh: "编辑",
-      },
-      preview: {
-        en: "Preview",
-        zh: "预览",
-      },
-    };
-    return translations[key]?.[language] || key;
-  };
 
   return (
     <main className="relative h-full w-full overflow-hidden bg-gray-50">
@@ -45,7 +24,7 @@ export default function Create() {
                 : "text-gray-500 hover:text-gray-700"
             }`}
           >
-            {translate("edit")}
+            {t("edit")}
           </button>
           <button
             onClick={() => setActiveTab("preview")}
@@ -55,29 +34,35 @@ export default function Create() {
                 : "text-gray-500 hover:text-gray-700"
             }`}
           >
-            {translate("preview")}
+            {t("preview")}
           </button>
         </div>
-        <div className="h-[calc(100vh-var(--top-nav-bar-height)-48px)] overflow-y-auto">
-          {activeTab === "form" && (
-            <div className="h-full overflow-y-auto">
+
+        {/* Tab 内容 */}
+        <div className="h-[calc(100vh-theme(spacing.14))]">
+          {activeTab === "form" ? (
+            <div className="h-full overflow-y-auto bg-gray-50 p-4">
               <ResumeForm />
             </div>
-          )}
-          {activeTab === "preview" && (
-            <div className="h-full overflow-y-auto">
+          ) : (
+            <div className="h-full overflow-hidden bg-gray-100">
               <Resume />
             </div>
           )}
         </div>
       </div>
 
-      {/* 桌面端网格布局 */}
-      <div className="hidden h-full grid-cols-6 md:grid">
-        <div className="col-span-3">
-          <ResumeForm />
+      {/* 桌面端 */}
+      <div className="hidden h-screen md:flex">
+        {/* 左侧表单 */}
+        <div className="flex h-full w-full flex-col overflow-hidden md:w-1/2">
+          <div className="flex-1 overflow-y-auto p-6">
+            <ResumeForm />
+          </div>
         </div>
-        <div className="col-span-3">
+
+        {/* 右侧预览 */}
+        <div className="hidden h-full md:flex md:w-1/2 md:flex-col">
           <Resume />
         </div>
       </div>

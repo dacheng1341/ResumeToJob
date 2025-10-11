@@ -17,7 +17,8 @@ import { CustomForm } from "components/ResumeForm/CustomForm";
 import { ResumeManagerButton } from "components/ResumeManager/ResumeManagerButton";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { cx } from "lib/cx";
-import { useLanguageRedux } from "../../lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../i18n";
 
 const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   workExperiences: WorkExperiencesForm,
@@ -33,7 +34,7 @@ export const ResumeForm = () => {
 
   const formsOrder = useAppSelector(selectFormsOrder);
   const [isHover, setIsHover] = useState(false);
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
   const dispatch = useAppDispatch();
 
   useEffect(() => {

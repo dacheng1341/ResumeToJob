@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAllResumes, importResumes } from "lib/redux/resumeManagerSlice";
 import type { AppDispatch } from "lib/redux/store";
 import type { ResumeData } from "lib/redux/types";
-import { useLanguageRedux } from "lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../i18n";
 
 export const ResumeImportExport: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
   const allResumes = useSelector(selectAllResumes);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

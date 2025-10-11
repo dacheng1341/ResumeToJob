@@ -12,12 +12,13 @@ import {
 } from "lib/redux/resumeManagerSlice";
 import type { ResumeEducation } from "lib/redux/types";
 import { updateFormHeadingIfNotCustomized } from "lib/redux/settingsSlice";
-import { useLanguageRedux } from "../../lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../i18n";
 
 export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
   const dispatch = useAppDispatch();
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
   const showDelete = educations.length > 1;
   const form = "educations";
 

@@ -11,7 +11,8 @@ import {
   type Template,
 } from "components/Resume/ResumePDF/templates";
 import dynamic from "next/dynamic";
-import { useLanguageRedux } from "../../../lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../../i18n";
 
 const Selection = ({
   selectedColor,
@@ -106,7 +107,7 @@ export const FontSizeSelections = ({
 }) => {
   const standardSizePt = FONT_FAMILY_TO_STANDARD_SIZE_IN_PT[fontFamily];
   const compactSizePt = standardSizePt - 1;
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
 
   const getSizeLabel = (idx: number) => {
     const labels: Record<string, string[]> = {
@@ -180,7 +181,7 @@ export const TemplateSelections = ({
   handleSettingsChange: (field: GeneralSetting, value: string) => void;
 }) => {
   const templates = getAllTemplates();
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
 
   const translateTemplate = (template: Template) => {
     const translations: Record<string, Record<string, { name: string }>> = {

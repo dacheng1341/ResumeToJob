@@ -1,69 +1,24 @@
 "use client";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { Link } from "../../navigation";
 import { useState } from "react";
 import logoSrc from "public/logo-500.png";
 import { cx } from "lib/cx";
-import { useLanguageRedux } from "../lib/hooks/useLanguageRedux";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { DismissibleBanner } from "./DismissibleBanner";
 import { clearLocalStorage } from "../lib/redux/local-storage";
 import { ConfirmModal } from "./ConfirmModal";
+import { useTranslations } from "next-intl";
 
 export const TopNavBar = () => {
   const pathName = usePathname();
-  const isHomePage = pathName === "/";
-  const { language } = useLanguageRedux();
+  const isHomePage = pathName === "/" || pathName === "/zh" || pathName === "/en";
+  const t = useTranslations("nav");
+  const tModal = useTranslations("modal");
+  const tCommon = useTranslations("common");
   const [menuOpen, setMenuOpen] = useState(false);
   const [bugReportModalOpen, setBugReportModalOpen] = useState(false);
   const [resetDefaultModalOpen, setResetDefaultModalOpen] = useState(false);
-
-  const translate = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      build: {
-        en: "Create Resume",
-        zh: "创建简历",
-      },
-      menu: {
-        en: "Menu",
-        zh: "菜单",
-      },
-      bugReport: {
-        en: "Bug Report",
-        zh: "反馈问题",
-      },
-      resetDefault: {
-        en: "Reset Default",
-        zh: "恢复默认",
-      },
-      bugReportTitle: {
-        en: "Bug Report",
-        zh: "反馈问题",
-      },
-      bugReportMessage: {
-        en: "If you find bugs or things you think are not good, please report issues in GitHub Issues.\n\nClick OK to jump to the GitHub Issues page.",
-        zh: "如果发现bug或者你认为不好的地方，请在GitHub Issues中反馈问题。\n\n点击确定将跳转到GitHub Issues页面。",
-      },
-      resetDefaultTitle: {
-        en: "Reset Default",
-        zh: "恢复默认",
-      },
-      resetDefaultMessage: {
-        en: "Are you sure you want to reset to default? This will delete all information, please make a backup.\n\nClick OK to clear all data and refresh the page.",
-        zh: "是否要恢复默认，会删除所有信息，请做好备份。\n\n点击确定后将清除所有数据并刷新网页。",
-      },
-      confirm: {
-        en: "OK",
-        zh: "确定",
-      },
-      cancel: {
-        en: "Cancel",
-        zh: "取消",
-      },
-    };
-
-    return translations[key]?.[language] || key;
-  };
 
   // 处理bug反馈点击
   const handleBugReportClick = () => {
@@ -128,23 +83,20 @@ export const TopNavBar = () => {
               onClick={handleBugReportClick}
               className="rounded-md px-1.5 py-2 text-gray-500 hover:bg-gray-100 focus-visible:bg-gray-100 lg:px-4"
             >
-              {translate("bugReport")}
+              {t("bugReport")}
             </button>
             <button
               onClick={handleResetDefaultClick}
               className="rounded-md px-1.5 py-2 text-red-500 hover:bg-red-50 focus-visible:bg-red-50 lg:px-4"
             >
-              {translate("resetDefault")}
+              {t("resetDefault")}
             </button>
-            {[["/resume-builder", translate("build")]].map(([href, text]) => (
-              <Link
-                key={text}
-                className="rounded-md px-1.5 py-2 text-gray-500 hover:bg-gray-100 focus-visible:bg-gray-100 lg:px-4"
-                href={href}
-              >
-                {text}
-              </Link>
-            ))}
+            <Link
+              className="rounded-md px-1.5 py-2 text-gray-500 hover:bg-gray-100 focus-visible:bg-gray-100 lg:px-4"
+              href="/resume-builder"
+            >
+              {t("createResume")}
+            </Link>
             <LanguageSwitcher />{" "}
             <div className="ml-1 mt-1 hidden sm:block">
               <iframe
@@ -199,7 +151,7 @@ export const TopNavBar = () => {
                   }}
                   className="px-4 py-3 text-left text-gray-700 hover:bg-gray-100"
                 >
-                  {translate("bugReport")}
+                  {t("bugReport")}
                 </button>
 
                 <button
@@ -209,22 +161,17 @@ export const TopNavBar = () => {
                   }}
                   className="px-4 py-3 text-left text-red-600 hover:bg-red-50"
                 >
-                  {translate("resetDefault")}
+                  {t("resetDefault")}
                 </button>
-                {[["/resume-builder", translate("build")]].map(
-                  ([href, text]) => (
-                    <Link
-                      key={text}
-                      onClick={closeMenu}
-                      className="px-4 py-3 text-gray-700 hover:bg-gray-100"
-                      href={href}
-                    >
-                      {text}
-                    </Link>
-                  ),
-                )}
+                <Link
+                  onClick={closeMenu}
+                  className="px-4 py-3 text-gray-700 hover:bg-gray-100"
+                  href="/resume-builder"
+                >
+                  {t("createResume")}
+                </Link>
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-gray-700">语言/Language</span>
+                  <span className="text-gray-700">{t("language")}</span>
                   <LanguageSwitcher />
                 </div>
               </div>
@@ -238,10 +185,10 @@ export const TopNavBar = () => {
         isOpen={bugReportModalOpen}
         onClose={() => setBugReportModalOpen(false)}
         onConfirm={handleBugReportConfirm}
-        title={translate("bugReportTitle")}
-        message={translate("bugReportMessage")}
-        confirmText={translate("confirm")}
-        cancelText={translate("cancel")}
+        title={tModal("bugReport.title")}
+        message={tModal("bugReport.message")}
+        confirmText={tCommon("confirm")}
+        cancelText={tCommon("cancel")}
       />
 
       {/* 恢复默认确认模态框 */}
@@ -249,10 +196,10 @@ export const TopNavBar = () => {
         isOpen={resetDefaultModalOpen}
         onClose={() => setResetDefaultModalOpen(false)}
         onConfirm={handleResetDefaultConfirm}
-        title={translate("resetDefaultTitle")}
-        message={translate("resetDefaultMessage")}
-        confirmText={translate("confirm")}
-        cancelText={translate("cancel")}
+        title={tModal("resetDefault.title")}
+        message={tModal("resetDefault.message")}
+        confirmText={tCommon("confirm")}
+        cancelText={tCommon("cancel")}
         confirmButtonClass="bg-red-600 hover:bg-red-700 text-white"
       />
     </>

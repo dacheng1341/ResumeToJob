@@ -5,12 +5,12 @@ import { initialSettings } from "lib/redux/settingsSlice";
 import { ResumeIframeCSR } from "components/Resume/ResumeIFrame";
 import { getResumeByLang } from "home/constants";
 import { getAllTemplates } from "components/Resume/ResumePDF/templates";
-import { useLanguageRedux } from "../lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 export const ResumeCarousel = () => {
-  const { language } = useLanguageRedux();
-  const resume = getResumeByLang(language);
+  const locale = useLocale() as "zh" | "en";
+  const resume = getResumeByLang(locale);
 
   const templates = getAllTemplates();
   const [templateIndex, setTemplateIndex] = useState(0);

@@ -1,30 +1,9 @@
-import "globals.css";
-import { TopNavBar } from "components/TopNavBar";
-import { Footer } from "components/Footer";
-import { Analytics } from "@vercel/analytics/react";
-import { Providers } from "./providers";
-import ClientLayout from "./ClientLayout";
-import { getMetadata } from "./metadata";
-
-export const metadata = getMetadata();
-
+// 此文件是 Next.js App Router 必需的根布局文件
+// 实际的布局逻辑由 [locale]/layout.tsx 处理
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="zh-CN">
-      <body className="flex min-h-screen flex-col">
-        <Providers>
-          <ClientLayout>
-            <TopNavBar />
-            <div className="flex-1">{children}</div>
-            <Footer />
-            <Analytics />
-          </ClientLayout>
-        </Providers>
-      </body>
-    </html>
-  );
+  return children;
 }

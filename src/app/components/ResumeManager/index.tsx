@@ -11,7 +11,8 @@ import {
 } from "lib/redux/resumeManagerSlice";
 import type { AppDispatch } from "lib/redux/store";
 import { Button } from "../Button";
-import { useLanguageRedux } from "lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../i18n";
 import { ResumeImportExport } from "./ResumeImportExport";
 import { ConfirmModal } from "../ConfirmModal";
 
@@ -25,7 +26,7 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
   onClose,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
 
   const resumes = useSelector(selectAllResumes);
   const currentResumeId = useSelector(selectCurrentResumeId);

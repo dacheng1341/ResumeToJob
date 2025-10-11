@@ -4,12 +4,13 @@ import { useEffect, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeCustom, selectCustom } from "lib/redux/resumeManagerSlice";
 import { updateFormHeadingIfNotCustomized } from "lib/redux/settingsSlice";
-import { useLanguageRedux } from "../../lib/hooks/useLanguageRedux";
+import { useLocale } from "next-intl";
+import type { Locale } from "../../../i18n";
 
 export const CustomForm = () => {
   const custom = useAppSelector(selectCustom);
   const dispatch = useAppDispatch();
-  const { language } = useLanguageRedux();
+  const language = useLocale() as Locale;
   const { descriptions } = custom;
   const form = "custom";
 

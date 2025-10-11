@@ -23,7 +23,10 @@ export const FAQ = () => {
     },
   ];
   return (
-    <section className="mx-auto mt-12 max-w-3xl px-4 pb-16 sm:mt-16 sm:px-8 sm:pb-20">
+    <section
+      id="faq"
+      className="mx-auto mt-12 max-w-3xl px-4 pb-16 sm:mt-16 sm:px-8 sm:pb-20"
+    >
       <FadeIn direction="up">
         <h2 className="text-center text-2xl font-bold text-gray-900 sm:text-3xl">
           {t("title")}

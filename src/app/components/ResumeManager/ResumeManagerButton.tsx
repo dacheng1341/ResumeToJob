@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { FolderIcon } from "@heroicons/react/24/outline";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,12 +8,11 @@ import {
   switchResume,
 } from "lib/redux/resumeManagerSlice";
 import { ResumeManager } from "./index";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../i18n";
+import { useTranslations } from "next-intl";
 
 export const ResumeManagerButton: React.FC = () => {
   const [isManagerOpen, setIsManagerOpen] = useState(false);
-  const language = useLocale() as Locale;
+  const t = useTranslations("resumeManager");
   const dispatch = useDispatch();
 
   const currentResume = useSelector(selectCurrentResume);
@@ -22,20 +22,6 @@ export const ResumeManagerButton: React.FC = () => {
     dispatch(switchResume(resumeId));
   };
 
-  const t = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      "manage-resumes": { zh: "管理简历", en: "Manage Resumes" },
-      "current-resume": { zh: "当前简历", en: "Current Resume" },
-      current: { zh: "当前", en: "Current" },
-      "not-selected": { zh: "未选择", en: "Not Selected" },
-      "resumes-count": { zh: "份简历", en: "resumes" },
-      "manage-button": { zh: "管理简历", en: "Manage Resumes" },
-      "quick-switch": { zh: "快速切换", en: "Quick Switch" },
-      more: { zh: "更多", en: "more" },
-    };
-    return translations[key]?.[language] || key;
-  };
-
   return (
     <div className="mb-6 rounded-md border border-gray-200 bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between">
@@ -43,12 +29,12 @@ export const ResumeManagerButton: React.FC = () => {
           <FolderIcon className="h-7 w-7 text-blue-600" />
           <div>
             <h3 className="text-lg font-medium text-gray-900">
-              {t("manage-resumes")}
+              {t("manageResumes")}
             </h3>
             <p className="text-sm text-gray-600">
               {t("current")}:{" "}
-              {currentResume?.metadata.title || t("not-selected")} (
-              {allResumes.length} {t("resumes-count")})
+              {currentResume?.metadata.title || t("notSelected")} (
+              {allResumes.length} {t("resumesCount")})
             </p>
           </div>
         </div>
@@ -56,7 +42,7 @@ export const ResumeManagerButton: React.FC = () => {
           onClick={() => setIsManagerOpen(true)}
           className="rounded-lg border border-gray-800 bg-white px-4 py-2 text-sm font-medium text-gray-800 transition-colors hover:bg-gray-50"
         >
-          {t("manage-button")}
+          {t("manageButton")}
         </button>
       </div>
 
@@ -64,7 +50,7 @@ export const ResumeManagerButton: React.FC = () => {
       {allResumes.length > 1 && (
         <div className="mt-4 border-t border-gray-100 pt-4">
           <p className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-500">
-            {t("quick-switch")}
+            {t("quickSwitch")}
           </p>
           <div className="flex flex-wrap gap-2">
             {allResumes.slice(0, 4).map((resume) => (

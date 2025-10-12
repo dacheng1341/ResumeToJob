@@ -1,68 +1,34 @@
+"use client";
 import { Form, FormSection } from "components/ResumeForm/Form";
 import {
   Input,
   BulletListTextarea,
 } from "components/ResumeForm/Form/InputGroup";
 import type { CreateHandleChangeArgsWithDescriptions } from "components/ResumeForm/types";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { selectProjects, changeProjects } from "lib/redux/resumeManagerSlice";
 import type { ResumeProject } from "lib/redux/types";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../i18n";
+import { useTranslations } from "next-intl";
 import { updateFormHeadingIfNotCustomized } from "lib/redux/settingsSlice";
 
 export const ProjectsForm = () => {
   const projects = useAppSelector(selectProjects);
   const dispatch = useAppDispatch();
-  const language = useLocale() as Locale;
+  const t = useTranslations("resumeForm.project");
   const showDelete = projects.length > 1;
-
-  const translate = useCallback(
-    (key: string) => {
-      const translations: Record<string, Record<string, string>> = {
-        projects: {
-          en: "Projects",
-          zh: "项目经历",
-        },
-        addProject: {
-          en: "Add Project",
-          zh: "添加项目",
-        },
-        deleteProject: {
-          en: "Delete Project",
-          zh: "删除项目",
-        },
-        projectName: {
-          en: "Project Name",
-          zh: "项目名称",
-        },
-        date: {
-          en: "Date",
-          zh: "日期",
-        },
-        projectDescription: {
-          en: "Project Description",
-          zh: "项目描述",
-        },
-      };
-
-      return translations[key]?.[language] || key;
-    },
-    [language],
-  );
 
   useEffect(() => {
     dispatch(
       updateFormHeadingIfNotCustomized({
         field: "projects",
-        value: translate("projects"),
+        value: t("title"),
       }),
     );
-  }, [dispatch, language, translate]);
+  }, [dispatch, t]);
 
   return (
-    <Form form="projects" addButtonText={translate("addProject")}>
+    <Form form="projects" addButtonText={t("add")}>
       {projects.map(({ id, project, date, descriptions }, idx) => {
         const handleProjectChange = (
           ...[
@@ -83,11 +49,11 @@ export const ProjectsForm = () => {
             showMoveUp={showMoveUp}
             showMoveDown={showMoveDown}
             showDelete={showDelete}
-            deleteButtonTooltipText={translate("deleteProject")}
+            deleteButtonTooltipText={t("delete")}
           >
             <Input
               name="project"
-              label={translate("projectName")}
+              label={t("project")}
               placeholder=""
               value={project}
               onChange={handleProjectChange}
@@ -95,7 +61,7 @@ export const ProjectsForm = () => {
             />{" "}
             <Input
               name="date"
-              label={translate("date")}
+              label={t("date")}
               placeholder=""
               value={date}
               onChange={handleProjectChange}
@@ -103,12 +69,8 @@ export const ProjectsForm = () => {
             />{" "}
             <BulletListTextarea
               name="descriptions"
-              label={translate("projectDescription")}
-              placeholder={
-                language === "en"
-                  ? "Supports Markdown, see editor instructions for details"
-                  : "支持Markdown，详见编辑器使用说明"
-              }
+              label={t("descriptions")}
+              placeholder={t("placeholder")}
               value={descriptions}
               onChange={handleProjectChange}
               labelClassName="col-span-full"

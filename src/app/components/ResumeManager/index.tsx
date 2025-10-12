@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,8 +12,7 @@ import {
 } from "lib/redux/resumeManagerSlice";
 import type { AppDispatch } from "lib/redux/store";
 import { Button } from "../Button";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../i18n";
+import { useTranslations } from "next-intl";
 import { ResumeImportExport } from "./ResumeImportExport";
 import { ConfirmModal } from "../ConfirmModal";
 
@@ -26,7 +26,7 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
   onClose,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const language = useLocale() as Locale;
+  const t = useTranslations("resumeManager");
 
   const resumes = useSelector(selectAllResumes);
   const currentResumeId = useSelector(selectCurrentResumeId);
@@ -45,43 +45,6 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
     resumeId: null,
     resumeTitle: "",
   });
-
-  const t = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      "resume-manager": { zh: "简历管理", en: "Resume Manager" },
-      "my-resumes": { zh: "我的简历", en: "My Resumes" },
-      "create-new": { zh: "创建新简历", en: "Create New Resume" },
-      "resume-title": { zh: "简历标题", en: "Resume Title" },
-      create: { zh: "创建", en: "Create" },
-      cancel: { zh: "取消", en: "Cancel" },
-      clone: { zh: "克隆", en: "Clone" },
-      delete: { zh: "删除", en: "Delete" },
-      edit: { zh: "编辑", en: "Edit" },
-      save: { zh: "保存", en: "Save" },
-      switch: { zh: "切换", en: "Switch" },
-      search: { zh: "搜索简历...", en: "Search resumes..." },
-      "created-at": { zh: "创建时间", en: "Created" },
-      "updated-at": { zh: "更新时间", en: "Updated" },
-      current: { zh: "当前", en: "Current" },
-      "no-resumes": {
-        zh: "还没有简历，创建你的第一份简历吧！",
-        en: "No resumes yet. Create your first resume!",
-      },
-      "confirm-delete": {
-        zh: "确定要删除这份简历吗？此操作无法撤销。",
-        en: "Are you sure you want to delete this resume? This action cannot be undone.",
-      },
-      "confirm-delete-title": {
-        zh: "删除简历",
-        en: "Delete Resume",
-      },
-      "confirm-delete-message": {
-        zh: '确定要删除简历 "{title}" 吗？\n\n此操作无法撤销，所有相关数据将被永久删除。',
-        en: 'Are you sure you want to delete the resume "{title}"?\n\nThis action cannot be undone and all related data will be permanently deleted.',
-      },
-    };
-    return translations[key]?.[language] || key;
-  };
 
   const handleCreateResume = () => {
     if (newResumeTitle.trim()) {
@@ -158,9 +121,7 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
   });
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(
-      language === "zh" ? "zh-CN" : "en-US",
-    );
+    return new Date(dateString).toLocaleDateString();
   };
 
   if (!isOpen) return null;
@@ -170,9 +131,7 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
       <div className="max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-lg bg-white shadow-xl">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 p-6">
-          <h2 className="text-2xl font-bold text-gray-900">
-            {t("resume-manager")}
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900">{t("title")}</h2>
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
@@ -214,7 +173,7 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
                   onClick={() => setShowCreateForm(true)}
                   className="whitespace-nowrap rounded-lg border border-gray-800 bg-white px-4 py-2 text-gray-800 transition-colors hover:bg-gray-50"
                 >
-                  {t("create-new")}
+                  {t("createNew")}
                 </Button>
               </div>
             </div>
@@ -222,20 +181,18 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
             {/* Create Form */}
             {showCreateForm && (
               <div className="mb-6 rounded-lg bg-gray-50 p-4">
-                <h3 className="mb-4 text-lg font-semibold">
-                  {t("create-new")}
-                </h3>
+                <h3 className="mb-4 text-lg font-semibold">{t("createNew")}</h3>
                 <div className="grid grid-cols-1 gap-4">
                   <div>
                     <label className="mb-2 block text-sm font-medium text-gray-700">
-                      {t("resume-title")}
+                      {t("resumeTitle")}
                     </label>
                     <input
                       type="text"
                       value={newResumeTitle}
                       onChange={(e) => setNewResumeTitle(e.target.value)}
                       className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500"
-                      placeholder={t("resume-title")}
+                      placeholder={t("resumeTitle")}
                     />
                   </div>
                 </div>
@@ -264,7 +221,7 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
             {filteredResumes.length === 0 ? (
               <div className="py-12 text-center">
                 <div className="mb-4 text-6xl text-gray-400">📄</div>
-                <p className="text-lg text-gray-500">{t("no-resumes")}</p>
+                <p className="text-lg text-gray-500">{t("noResumes")}</p>
               </div>
             ) : (
               <div className="grid gap-4">
@@ -322,11 +279,11 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
                         )}
                         <div className="flex flex-wrap gap-4 text-sm text-gray-500">
                           <span>
-                            📅 {t("created-at")}:{" "}
+                            📅 {t("createdAt")}:{" "}
                             {formatDate(resume.metadata.createdAt)}
                           </span>
                           <span>
-                            🔄 {t("updated-at")}:{" "}
+                            🔄 {t("updatedAt")}:{" "}
                             {formatDate(resume.metadata.updatedAt)}
                           </span>
                         </div>
@@ -387,8 +344,8 @@ export const ResumeManager: React.FC<ResumeManagerProps> = ({
         isOpen={deleteConfirm.isOpen}
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}
-        title={t("confirm-delete-title")}
-        message={t("confirm-delete-message").replace(
+        title={t("confirmDeleteTitle")}
+        message={t("confirmDeleteMessage").replace(
           "{title}",
           deleteConfirm.resumeTitle,
         )}

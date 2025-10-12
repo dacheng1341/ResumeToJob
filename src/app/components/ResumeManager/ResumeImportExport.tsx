@@ -1,44 +1,20 @@
+"use client";
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllResumes, importResumes } from "lib/redux/resumeManagerSlice";
 import type { AppDispatch } from "lib/redux/store";
 import type { ResumeData } from "lib/redux/types";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../i18n";
+import { useTranslations } from "next-intl";
 
 export const ResumeImportExport: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const language = useLocale() as Locale;
+  const t = useTranslations("resumeManager");
   const allResumes = useSelector(selectAllResumes);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const t = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      "export-all": { zh: "导出所有简历", en: "Export All Resumes" },
-      "import-resumes": { zh: "导入简历", en: "Import Resumes" },
-      "export-success": {
-        zh: "简历数据已成功导出！",
-        en: "Resume data exported successfully!",
-      },
-      "import-success": {
-        zh: "简历数据导入成功！",
-        en: "Resume data imported successfully!",
-      },
-      "import-error": {
-        zh: "导入失败，请检查文件格式",
-        en: "Import failed, please check file format",
-      },
-      "no-resumes-to-export": {
-        zh: "没有简历可以导出",
-        en: "No resumes to export",
-      },
-    };
-    return translations[key]?.[language] || key;
-  };
-
   const handleExportAll = () => {
     if (allResumes.length === 0) {
-      alert(t("no-resumes-to-export"));
+      alert(t("noResumesToExport"));
       return;
     }
 
@@ -60,7 +36,7 @@ export const ResumeImportExport: React.FC = () => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 
-    alert(t("export-success"));
+    alert(t("exportSuccess"));
   };
 
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +61,7 @@ export const ResumeImportExport: React.FC = () => {
           if (validResumes.length > 0) {
             dispatch(importResumes(validResumes));
             alert(
-              `${t("import-success")} 导入了 ${validResumes.length} 份简历。`,
+              `${t("importSuccess")} 导入了 ${validResumes.length} 份简历。`,
             );
           } else {
             throw new Error("No valid resumes found");
@@ -95,7 +71,7 @@ export const ResumeImportExport: React.FC = () => {
         }
       } catch (error) {
         console.error("Import error:", error);
-        alert(t("import-error"));
+        alert(t("importError"));
       }
     };
 
@@ -111,18 +87,18 @@ export const ResumeImportExport: React.FC = () => {
       <button
         onClick={handleExportAll}
         className="rounded-lg border border-green-600 bg-white px-4 py-2 text-sm text-green-700 transition-colors hover:bg-green-50 disabled:opacity-50"
-        title={t("export-all")}
+        title={t("exportAll")}
         disabled={allResumes.length === 0}
       >
-        {t("export-all")}
+        {t("exportAll")}
       </button>
 
       <button
         onClick={() => fileInputRef.current?.click()}
         className="rounded-lg border border-blue-600 bg-white px-4 py-2 text-sm text-blue-700 transition-colors hover:bg-blue-50"
-        title={t("import-resumes")}
+        title={t("importResumes")}
       >
-        {t("import-resumes")}
+        {t("importResumes")}
       </button>
 
       <input

@@ -86,8 +86,15 @@
       "phone": "Phone",
       "url": "Website",
       "summary": "Summary",
+      "summaryPlaceholder": "Supports Markdown, see editor instructions for details",
       "location": "Location",
-      "photoUrl": "Photo URL"
+      "photoUrl": "Photo URL",
+      "photo": "Photo",
+      "uploadProfessionalPhoto": "Upload a professional photo",
+      "checkCarefully": "Check carefully",
+      "website": "Website",
+      "websiteExample": "e.g.: GitHub, blog, etc.",
+      "personalPhoto": "Personal Photo"
     },
     "workExperience": {
       "title": "Work Experience",
@@ -107,15 +114,18 @@
       "degree": "Degree",
       "date": "Date",
       "gpa": "GPA",
-      "descriptions": "Descriptions"
+      "descriptions": "Descriptions",
+      "additionalInfo": "Additional Information (Optional)",
+      "placeholder": "Supports Markdown, see editor instructions for details"
     },
     "project": {
       "title": "Projects",
       "add": "Add Project",
       "delete": "Delete Project",
-      "project": "Project",
+      "project": "Project Name",
       "date": "Date",
-      "descriptions": "Descriptions"
+      "descriptions": "Project Description",
+      "placeholder": "Supports Markdown, see editor instructions for details"
     },
     "skills": {
       "title": "Skills",
@@ -127,8 +137,10 @@
       "placeholder": "Supports Markdown, see editor instructions for details"
     },
     "custom": {
-      "title": "Custom",
-      "descriptions": "Custom Descriptions"
+      "title": "Custom Section",
+      "descriptions": "Custom Descriptions",
+      "customContent": "Custom Content",
+      "placeholder": "Supports Markdown, see editor instructions for details"
     }
   },
   "modal": {
@@ -144,5 +156,82 @@
   "banner": {
     "message": "Resume data is stored in browser locally. To prevent accidental loss, it is recommended to use the [manage resumes] function to export and save.",
     "close": "Close"
+  },
+  "editorInstructions": {
+    "title": "Editor Instructions",
+    "showInstructions": "Show Instructions",
+    "hideInstructions": "Hide Instructions",
+    "markdown": "Markdown Shortcuts",
+    "unorderedList": "Type '- ' or '* ' to create an unordered list (note the space after)",
+    "orderedList": "Type '1. ' to create an ordered list (note the space after)",
+    "boldText": "Type '**text**' or '__text__' to make text bold",
+    "autoList": "When you press Enter at the end of a list item, a new list item is automatically created. Press Enter again to cancel the auto-list.",
+    "hyperlink": "Hyperlinks are supported in your resume. Use one of the following methods:",
+    "hyperlinkMethod1": "Wrap URLs with English parentheses (not Chinese parentheses)",
+    "hyperlinkMethod2": "Leave spaces around URLs",
+    "hint": "These shortcuts help you format your resume content more efficiently.",
+    "resumeManagement": "Resume Management",
+    "resumeManagementDesc": "Support for creating, switching, cloning, and importing/exporting multiple resumes"
+  },
+  "resumeManager": {
+    "title": "Resume Manager",
+    "myResumes": "My Resumes",
+    "createNew": "Create New Resume",
+    "resumeTitle": "Resume Title",
+    "create": "Create",
+    "cancel": "Cancel",
+    "clone": "Clone",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "switch": "Switch",
+    "search": "Search resumes...",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "current": "Current",
+    "noResumes": "No resumes yet. Create your first resume!",
+    "confirmDelete": "Are you sure you want to delete this resume? This action cannot be undone.",
+    "confirmDeleteTitle": "Delete Resume",
+    "confirmDeleteMessage": "Are you sure you want to delete the resume \"{title}\"?\n\nThis action cannot be undone and all related data will be permanently deleted.",
+    "manageResumes": "Manage Resumes",
+    "currentResume": "Current Resume",
+    "notSelected": "Not Selected",
+    "resumesCount": "resumes",
+    "manageButton": "Manage Resumes",
+    "quickSwitch": "Quick Switch",
+    "more": "more",
+    "exportAll": "Export All Resumes",
+    "importResumes": "Import Resumes",
+    "exportSuccess": "Resume data exported successfully!",
+    "importSuccess": "Resume data imported successfully!",
+    "importError": "Import failed, please check file format",
+    "noResumesToExport": "No resumes to export"
+  },
+  "resumeControlBar": {
+    "autoscale": "Autoscale",
+    "download": "Download Resume"
+  },
+  "themeForm": {
+    "settings": "Resume Settings",
+    "template": "Template Style",
+    "themeColor": "Theme Color",
+    "fontFamily": "Font Family",
+    "fontSize": "Font Size",
+    "documentSize": "Document Size"
+  },
+  "templates": {
+    "classic": "Classic",
+    "professional": "Professional",
+    "modern": "Modern",
+    "elegant": "Elegant",
+    "creative": "Creative",
+    "tech": "Tech",
+    "minimal": "Minimal",
+    "compact": "Compact"
+  },
+  "fontSize": {
+    "compact": "Compact",
+    "standard": "Standard",
+    "large": "Large"
   }
 }

@@ -1,3 +1,4 @@
+"use client";
 import type { GeneralSetting } from "lib/redux/settingsSlice";
 import { PX_PER_PT } from "lib/constants";
 import {
@@ -11,8 +12,7 @@ import {
   type Template,
 } from "components/Resume/ResumePDF/templates";
 import dynamic from "next/dynamic";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../../i18n";
+import { useTranslations } from "next-intl";
 
 const Selection = ({
   selectedColor,
@@ -107,15 +107,11 @@ export const FontSizeSelections = ({
 }) => {
   const standardSizePt = FONT_FAMILY_TO_STANDARD_SIZE_IN_PT[fontFamily];
   const compactSizePt = standardSizePt - 1;
-  const language = useLocale() as Locale;
+  const t = useTranslations("fontSize");
 
   const getSizeLabel = (idx: number) => {
-    const labels: Record<string, string[]> = {
-      en: ["Compact", "Standard", "Large"],
-      zh: ["紧凑", "标准", "大号"],
-    };
-
-    return labels[language as keyof typeof labels]?.[idx] || labels.zh[idx];
+    const keys = ["compact", "standard", "large"];
+    return t(keys[idx]);
   };
 
   return (
@@ -181,81 +177,13 @@ export const TemplateSelections = ({
   handleSettingsChange: (field: GeneralSetting, value: string) => void;
 }) => {
   const templates = getAllTemplates();
-  const language = useLocale() as Locale;
+  const t = useTranslations("templates");
 
   const translateTemplate = (template: Template) => {
-    const translations: Record<string, Record<string, { name: string }>> = {
-      classic: {
-        en: {
-          name: "Classic",
-        },
-        zh: {
-          name: "经典模板",
-        },
-      },
-      professional: {
-        en: {
-          name: "Professional",
-        },
-        zh: {
-          name: "专业模板",
-        },
-      },
-      modern: {
-        en: {
-          name: "Modern",
-        },
-        zh: {
-          name: "现代模板",
-        },
-      },
-      elegant: {
-        en: {
-          name: "Elegant",
-        },
-        zh: {
-          name: "优雅模板",
-        },
-      },
-      creative: {
-        en: {
-          name: "Creative",
-        },
-        zh: {
-          name: "创意模板",
-        },
-      },
-      tech: {
-        en: {
-          name: "Tech",
-        },
-        zh: {
-          name: "科技模板",
-        },
-      },
-      minimal: {
-        en: {
-          name: "Minimal",
-        },
-        zh: {
-          name: "极简模板",
-        },
-      },
-      compact: {
-        en: {
-          name: "Compact",
-        },
-        zh: {
-          name: "紧凑模板",
-        },
-      },
+    const translatedName = t(template.id);
+    return {
+      name: translatedName || template.name,
     };
-
-    return (
-      translations[template.id]?.[language] || {
-        name: template.name,
-      }
-    );
   };
 
   return (

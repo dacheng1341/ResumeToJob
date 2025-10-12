@@ -1,40 +1,19 @@
+"use client";
 import { Form } from "components/ResumeForm/Form";
 import { BulletListTextarea } from "components/ResumeForm/Form/InputGroup";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeCustom, selectCustom } from "lib/redux/resumeManagerSlice";
 import { updateFormHeadingIfNotCustomized } from "lib/redux/settingsSlice";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../i18n";
+import { useTranslations } from "next-intl";
 
 export const CustomForm = () => {
   const custom = useAppSelector(selectCustom);
   const dispatch = useAppDispatch();
-  const language = useLocale() as Locale;
+  const t = useTranslations("resumeForm.custom");
   const { descriptions } = custom;
   const form = "custom";
 
-  const translate = useCallback(
-    (key: string) => {
-      const translations: Record<string, Record<string, string>> = {
-        custom: {
-          en: "Custom Section",
-          zh: "自定义部分",
-        },
-        customContent: {
-          en: "Custom Content",
-          zh: "自定义内容",
-        },
-        addCustomContent: {
-          en: "Supports Markdown, see editor instructions for details",
-          zh: "支持Markdown，详见编辑器使用说明",
-        },
-      };
-
-      return translations[key]?.[language] || key;
-    },
-    [language],
-  );
   const handleCustomChange = (field: "descriptions", value: string[]) => {
     dispatch(changeCustom({ field, value }));
   };
@@ -43,10 +22,10 @@ export const CustomForm = () => {
     dispatch(
       updateFormHeadingIfNotCustomized({
         field: form,
-        value: translate("custom"),
+        value: t("title"),
       }),
     );
-  }, [dispatch, language, form, translate]);
+  }, [dispatch, form, t]);
 
   return (
     <Form form={form}>
@@ -54,10 +33,10 @@ export const CustomForm = () => {
         {" "}
         <div className="col-span-full">
           <BulletListTextarea
-            label={translate("customContent")}
+            label={t("customContent")}
             labelClassName="col-span-full"
             name="descriptions"
-            placeholder={translate("addCustomContent")}
+            placeholder={t("placeholder")}
             value={descriptions}
             onChange={handleCustomChange}
           />

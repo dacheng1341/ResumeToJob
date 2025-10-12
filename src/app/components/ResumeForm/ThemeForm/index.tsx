@@ -1,3 +1,4 @@
+"use client";
 import { BaseForm } from "components/ResumeForm/Form";
 import { InputGroupWrapper } from "components/ResumeForm/Form/InputGroup";
 import { THEME_COLORS } from "components/ResumeForm/ThemeForm/constants";
@@ -17,50 +18,17 @@ import {
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import type { FontFamily } from "components/fonts/constants";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../../i18n";
+import { useTranslations } from "next-intl";
 
 export const ThemeForm = () => {
   const settings = useAppSelector(selectSettings);
   const { fontSize, fontFamily, documentSize, template } = settings;
   const themeColor = settings.themeColor || DEFAULT_THEME_COLOR;
   const dispatch = useAppDispatch();
-  const language = useLocale() as Locale;
+  const t = useTranslations("themeForm");
 
   const handleSettingsChange = (field: GeneralSetting, value: string) => {
     dispatch(changeSettings({ field, value }));
-  };
-
-  // 翻译函数
-  const translate = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      settings: {
-        en: "Resume Settings",
-        zh: "简历设置",
-      },
-      template: {
-        en: "Template Style",
-        zh: "模板样式",
-      },
-      themeColor: {
-        en: "Theme Color",
-        zh: "主题颜色",
-      },
-      fontFamily: {
-        en: "Font Family",
-        zh: "字体（仅思源黑体有中文，其它会乱码）",
-      },
-      fontSize: {
-        en: "Font Size",
-        zh: "字体大小",
-      },
-      documentSize: {
-        en: "Document Size",
-        zh: "文档大小",
-      },
-    };
-
-    return translations[key]?.[language] || key;
   };
 
   return (
@@ -69,11 +37,11 @@ export const ThemeForm = () => {
         <div className="flex items-center gap-2">
           <Cog6ToothIcon className="h-6 w-6 text-gray-600" aria-hidden="true" />
           <h1 className="text-lg font-semibold tracking-wide text-gray-900">
-            {translate("settings")}
+            {t("settings")}
           </h1>
         </div>
         <div>
-          <InputGroupWrapper label={translate("template")} />
+          <InputGroupWrapper label={t("template")} />
           <TemplateSelections
             themeColor={themeColor}
             selectedTemplate={template}
@@ -82,7 +50,7 @@ export const ThemeForm = () => {
         </div>
         <div>
           <InlineInput
-            label={translate("themeColor")}
+            label={t("themeColor")}
             name="themeColor"
             value={settings.themeColor}
             placeholder={DEFAULT_THEME_COLOR}
@@ -108,7 +76,7 @@ export const ThemeForm = () => {
           </div>
         </div>{" "}
         <div>
-          <InputGroupWrapper label={translate("fontFamily")} />
+          <InputGroupWrapper label={t("fontFamily")} />
           <FontFamilySelectionsCSR
             selectedFontFamily={fontFamily}
             themeColor={themeColor}
@@ -117,7 +85,7 @@ export const ThemeForm = () => {
         </div>{" "}
         <div>
           <InlineInput
-            label={translate("fontSize") + " (pt)"}
+            label={t("fontSize") + " (pt)"}
             name="fontSize"
             value={fontSize}
             placeholder="11"
@@ -131,7 +99,7 @@ export const ThemeForm = () => {
           />
         </div>{" "}
         <div>
-          <InputGroupWrapper label={translate("documentSize")} />
+          <InputGroupWrapper label={t("documentSize")} />
           <DocumentSizeSelections
             themeColor={themeColor}
             selectedDocumentSize={documentSize}

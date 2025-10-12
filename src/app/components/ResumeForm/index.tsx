@@ -1,11 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "lib/redux/hooks";
-import {
-  ShowForm,
-  selectFormsOrder,
-  updateFormHeadingIfNotCustomized,
-} from "lib/redux/settingsSlice";
+import { useState } from "react";
+import { useAppSelector } from "lib/redux/hooks";
+import { ShowForm, selectFormsOrder } from "lib/redux/settingsSlice";
 import { EditorInstructions } from "./EditorInstructions";
 import { ProfileForm } from "components/ResumeForm/ProfileForm";
 import { WorkExperiencesForm } from "components/ResumeForm/WorkExperiencesForm";
@@ -17,8 +13,6 @@ import { CustomForm } from "components/ResumeForm/CustomForm";
 import { ResumeManagerButton } from "components/ResumeManager/ResumeManagerButton";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { cx } from "lib/cx";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../i18n";
 
 const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   workExperiences: WorkExperiencesForm,
@@ -29,51 +23,8 @@ const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
 };
 
 export const ResumeForm = () => {
-  // 初始化逻辑已移动到 providers.tsx 中的 StoreInitializer 组件
-  // 这样确保无论用户访问哪个页面，都会正确初始化状态
-
   const formsOrder = useAppSelector(selectFormsOrder);
   const [isHover, setIsHover] = useState(false);
-  const language = useLocale() as Locale;
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const updateFormHeadings = () => {
-      const translations: Record<ShowForm, Record<string, string>> = {
-        workExperiences: {
-          en: "Work Experience",
-          zh: "工作经历",
-        },
-        educations: {
-          en: "Education",
-          zh: "教育经历",
-        },
-        projects: {
-          en: "Projects",
-          zh: "项目经历",
-        },
-        skills: {
-          en: "Skills",
-          zh: "技能",
-        },
-        custom: {
-          en: "Custom Section",
-          zh: "自定义部分",
-        },
-      };
-
-      Object.entries(translations).forEach(([form, texts]) => {
-        dispatch(
-          updateFormHeadingIfNotCustomized({
-            field: form as ShowForm,
-            value: texts[language] || texts["zh"],
-          }),
-        );
-      });
-    };
-
-    updateFormHeadings();
-  }, [dispatch, language]);
   return (
     <div
       className={cx(

@@ -7,8 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../i18n";
+import { useTranslations } from "next-intl";
 
 const ResumeControlBar = ({
   scale,
@@ -29,22 +28,7 @@ const ResumeControlBar = ({
     setScale,
     documentSize,
   });
-  const language = useLocale() as Locale;
-
-  const translate = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      autoscale: {
-        en: "Autoscale",
-        zh: "自动缩放",
-      },
-      download: {
-        en: "Download Resume",
-        zh: "下载简历",
-      },
-    };
-
-    return translations[key]?.[language] || key;
-  };
+  const t = useTranslations("resumeControlBar");
 
   const [instance, update] = usePDF({ document });
 
@@ -77,7 +61,7 @@ const ResumeControlBar = ({
             checked={scaleOnResize}
             onChange={() => setScaleOnResize((prev) => !prev)}
           />{" "}
-          <span className="select-none">{translate("autoscale")}</span>
+          <span className="select-none">{t("autoscale")}</span>
         </label>
       </div>
       <a
@@ -86,7 +70,7 @@ const ResumeControlBar = ({
         download={fileName}
       >
         <ArrowDownTrayIcon className="h-4 w-4" />
-        <span className="whitespace-nowrap">{translate("download")}</span>
+        <span className="whitespace-nowrap">{t("download")}</span>
       </a>
     </div>
   );

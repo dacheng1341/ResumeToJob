@@ -1,10 +1,11 @@
+"use client";
 import { Form, FormSection } from "components/ResumeForm/Form";
 import {
   BulletListTextarea,
   Input,
 } from "components/ResumeForm/Form/InputGroup";
 import type { CreateHandleChangeArgsWithDescriptions } from "components/ResumeForm/types";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import {
   changeEducations,
@@ -12,73 +13,26 @@ import {
 } from "lib/redux/resumeManagerSlice";
 import type { ResumeEducation } from "lib/redux/types";
 import { updateFormHeadingIfNotCustomized } from "lib/redux/settingsSlice";
-import { useLocale } from "next-intl";
-import type { Locale } from "../../../i18n";
+import { useTranslations } from "next-intl";
 
 export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
   const dispatch = useAppDispatch();
-  const language = useLocale() as Locale;
+  const t = useTranslations("resumeForm.education");
   const showDelete = educations.length > 1;
   const form = "educations";
-
-  const translate = useCallback(
-    (key: string) => {
-      const translations: Record<string, Record<string, string>> = {
-        educations: {
-          en: "Education",
-          zh: "教育经历",
-        },
-        addEducation: {
-          en: "Add Education",
-          zh: "添加教育经历",
-        },
-        deleteEducation: {
-          en: "Delete Education",
-          zh: "删除教育经历",
-        },
-        school: {
-          en: "School",
-          zh: "学校",
-        },
-        degree: {
-          en: "Degree",
-          zh: "学位",
-        },
-        gpa: {
-          en: "GPA",
-          zh: "GPA",
-        },
-        date: {
-          en: "Date",
-          zh: "日期",
-        },
-        descriptions: {
-          en: "Descriptions",
-          zh: "描述",
-        },
-        showBulletPoints: {
-          en: "Show bullet points",
-          zh: "显示项目符号",
-        },
-      };
-
-      return translations[key]?.[language] || key;
-    },
-    [language],
-  );
 
   useEffect(() => {
     dispatch(
       updateFormHeadingIfNotCustomized({
         field: form,
-        value: translate("educations"),
+        value: t("title"),
       }),
     );
-  }, [dispatch, language, form, translate]);
+  }, [dispatch, form, t]);
 
   return (
-    <Form form={form} addButtonText={translate("addEducation")}>
+    <Form form={form} addButtonText={t("add")}>
       {educations.map(
         ({ id, school, degree, gpa, date, descriptions }, idx) => {
           const handleEducationChange = (
@@ -101,10 +55,10 @@ export const EducationsForm = () => {
               showMoveUp={showMoveUp}
               showMoveDown={showMoveDown}
               showDelete={showDelete}
-              deleteButtonTooltipText={translate("deleteEducation")}
+              deleteButtonTooltipText={t("delete")}
             >
               <Input
-                label={translate("school")}
+                label={t("school")}
                 labelClassName="col-span-4"
                 name="school"
                 placeholder=""
@@ -112,7 +66,7 @@ export const EducationsForm = () => {
                 onChange={handleEducationChange}
               />
               <Input
-                label={translate("date")}
+                label={t("date")}
                 labelClassName="col-span-2"
                 name="date"
                 placeholder=""
@@ -120,7 +74,7 @@ export const EducationsForm = () => {
                 onChange={handleEducationChange}
               />
               <Input
-                label={translate("degree")}
+                label={t("degree")}
                 labelClassName="col-span-4"
                 name="degree"
                 placeholder=""
@@ -128,7 +82,7 @@ export const EducationsForm = () => {
                 onChange={handleEducationChange}
               />
               <Input
-                label={translate("gpa")}
+                label={t("gpa")}
                 labelClassName="col-span-2"
                 name="gpa"
                 placeholder=""
@@ -137,18 +91,10 @@ export const EducationsForm = () => {
               />{" "}
               <div className="col-span-full">
                 <BulletListTextarea
-                  label={
-                    language === "en"
-                      ? "Additional Information (Optional)"
-                      : "附加信息（可选）"
-                  }
+                  label={t("additionalInfo")}
                   labelClassName="col-span-full"
                   name="descriptions"
-                  placeholder={
-                    language === "en"
-                      ? "Supports Markdown, see editor instructions for details"
-                      : "支持Markdown，详见编辑器使用说明"
-                  }
+                  placeholder={t("placeholder")}
                   value={descriptions}
                   onChange={handleEducationChange}
                 />

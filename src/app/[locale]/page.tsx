@@ -7,6 +7,7 @@ import { LogoFallingAnimation } from "components/animations/LogoFallingAnimation
 import { getMetadata } from "../metadata";
 
 export const metadata: Metadata = getMetadata();
+export const runtime = 'edge';
 
 export default function Home() {
   return (

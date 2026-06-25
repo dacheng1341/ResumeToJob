@@ -5,6 +5,8 @@ import { Resume } from "components/Resume";
 import { useResumeSync } from "../../lib/hooks/useResumeSync";
 import { useTranslations } from "next-intl";
 
+export const runtime = 'edge';
+
 export default function Create() {
   const [activeTab, setActiveTab] = useState<"form" | "preview">("form");
   const t = useTranslations("resumeBuilder");

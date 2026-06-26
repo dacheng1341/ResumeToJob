@@ -82,10 +82,10 @@ export const TopNavBar = () => {
       >
         <div className="flex h-10 w-full items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <span className="sr-only">ResumeToJob</span>
+            <span className="sr-only">闪电简历</span>
             <img src={logoSrc.src} alt="Logo" className="h-8 w-auto" />
             <span className="text-lg font-semibold text-gray-800">
-              ResumeToJob
+              闪电简历
             </span>
           </Link>
 
@@ -120,13 +120,14 @@ export const TopNavBar = () => {
             </Link>
             <LanguageSwitcher />{" "}
             <div className="ml-1 mt-1 hidden sm:block">
-              <iframe
-                src="https://ghbtns.com/github-btn.html?user=ltlylfun&repo=ResumeToJob&type=star&count=true"
-                width="100"
-                height="20"
-                className="overflow-hidden border-none"
-                title="GitHub"
-              />
+              <a
+                href="https://dacbbox.com"
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm font-medium text-blue-600 hover:text-blue-800"
+              >
+                大程开源百宝箱
+              </a>
             </div>
           </nav>
 

@@ -94,18 +94,7 @@ export const TopNavBar = () => {
             aria-label="Site Nav Bar"
             className="hidden items-center gap-2 text-sm font-medium md:flex"
           >
-            <button
-              onClick={handleFAQClick}
-              className="rounded-md px-1.5 py-2 text-gray-500 hover:bg-gray-100 focus-visible:bg-gray-100 lg:px-4"
-            >
-              {t("faq")}
-            </button>
-            <button
-              onClick={handleBugReportClick}
-              className="rounded-md px-1.5 py-2 text-gray-500 hover:bg-gray-100 focus-visible:bg-gray-100 lg:px-4"
-            >
-              {t("bugReport")}
-            </button>
+
             <button
               onClick={handleResetDefaultClick}
               className="rounded-md px-1.5 py-2 text-red-500 hover:bg-red-50 focus-visible:bg-red-50 lg:px-4"
@@ -166,21 +155,7 @@ export const TopNavBar = () => {
           {menuOpen && (
             <div className="absolute left-0 right-0 top-[var(--top-nav-bar-height)] z-50 bg-white shadow-lg md:hidden">
               <div className="flex flex-col py-2">
-                <button
-                  onClick={handleFAQClick}
-                  className="px-4 py-3 text-left text-gray-700 hover:bg-gray-100"
-                >
-                  {t("faq")}
-                </button>
-                <button
-                  onClick={() => {
-                    handleBugReportClick();
-                    closeMenu();
-                  }}
-                  className="px-4 py-3 text-left text-gray-700 hover:bg-gray-100"
-                >
-                  {t("bugReport")}
-                </button>
+
 
                 <button
                   onClick={() => {
